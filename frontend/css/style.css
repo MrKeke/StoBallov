@@ -145,5 +145,12 @@ span > svg {
     font-weight: 500;
     font-size: 26px;
     line-height: 120%;
-    margin-top: 15px;
+}
+.aboutTeacher{
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+.aboutTeacher > p{
+    color: dimgray;
 }

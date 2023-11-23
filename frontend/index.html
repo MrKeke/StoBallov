@@ -203,26 +203,34 @@
     </div>
     <div style="padding-top: 160px;">
         <h1 class="aboutH">Контакты Преподавателя</h1>
-        <div style="display: grid;   gap:40px; justify-items: center; align-items: center">
-            <div>
-                <p style="color: dimgray">Телефон</p>
+        <div style="display: grid; gap:40px; grid-template-areas: 'A C C' 'B C C' 'D C C'; padding-top: 120px; ">
+            <div class="aboutTeacher" style="grid-area: A;">
+                <p>Телефон</p>
                 <a class="number" href="tel:+79264747737">+7 926 474 77 37</a>
             </div>
-            <div>
-                <p style="color: dimgray">Email</p>
+            <div class="aboutTeacher" style="grid-area: B">
+                <p>Email</p>
                 <a class="number" href="mailto:lizakozinenko@gmail.com">lizakozinenko@gmail.com</a>
             </div>
-            <div>
-                <img width="320" height="320" src="img/teacher.jpg" alt="Преподаватель">
+            <div style="grid-area: C; justify-self: center">
+                <img width="520" height="520" src="img/teacher.jpg" alt="Преподаватель">
             </div>
-            <div>
-                <a target="_blank" href="https://vk.com/id1"><img width="64" height="64" src="img/vk.svg.png" alt="vkIcon"/></a>
-                <a target="_blank" href="https://t.me/lizakozinenko"><img width="64" height="64" src="img/telegramLogo.webp" alt="telegramIcon"/></a>
+            <div class="aboutTeacher" style="grid-area: D;">
+                <p>Социльные сети</p>
+                <div style="display: flex; flex-direction: row; gap:40px;">
+                    <a target="_blank" href="https://vk.com/id1"><img width="64" height="64" src="img/vk.svg.png"
+                                                                      alt="vkIcon"/></a>
+                    <a target="_blank" href="https://t.me/lizakozinenko"><img width="64" height="64"
+                                                                              src="img/telegramLogo.webp"
+                                                                              alt="telegramIcon"/></a>
+                </div>
             </div>
         </div>
     </div>
-    <div style="height: 1000px"></div>
 </main>
+<footer>
+
+</footer>
 </body>
 <script type="text/javascript" src="javascript/script.js"></script>
 </html>
