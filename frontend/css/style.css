@@ -10,7 +10,7 @@ body {
     margin: 0 auto;
     width: 100%;
     height: 100%;
-    color: #FFFFFF;
+    color: black;
     font-size: 16px;
     line-height: 1.5;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -18,7 +18,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     overflow-y: scroll;
-    background-color: #000000;
+    background-color: #ffffff;
     max-width: 1180px;
     min-width: 280px;
 
@@ -36,11 +36,11 @@ body {
     left: 0;
     top: 0;
     width: 100%;
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid dimgray;
 }
 
 .headerContainer.out {
-    top: -67px
+    top: -100px
 }
 
 .header {
@@ -49,7 +49,6 @@ body {
     width: 100%;
     align-items: center;
     font-size: 15px;
-    color: #ffffff;
     padding: 13px 0;
     min-width: 280px;
     max-width: 1180px;
@@ -80,16 +79,23 @@ span > svg {
     line-height: 140%;
     white-space: pre-line;
 }
+i
 
 .gridComment {
     position: relative;
     margin-top: 56px;
     display: grid;
+    min-width: 280px;
+    max-width: 1180px;
     gap: 20px;
     grid-template-areas:
-"one   one  one  three three five  five "
-"eight two  two  three three six   six  "
-"eight four four four  four  seven seven";
+"one four three"
+"two five three"
+"seven eight six" ;
+}
+.containerComment > img{
+    width: 100%;
+    height: 100%;
 }
 
 .imgComment {
@@ -121,7 +127,6 @@ span > svg {
     gap: 10px;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     overflow: hidden;
     border-radius: 22px;
 }
@@ -140,7 +145,6 @@ span > svg {
 }
 .number{
     display: block;
-    color: white;
     text-decoration: none;
     font-weight: 500;
     font-size: 26px;
@@ -153,4 +157,8 @@ span > svg {
 }
 .aboutTeacher > p{
     color: dimgray;
+}
+a{
+    text-decoration: none;
+    color: black;
 }
