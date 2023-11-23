@@ -52,7 +52,7 @@ body {
     padding: 13px 0;
     min-width: 280px;
     max-width: 1180px;
-
+    font-weight: bold;
     margin-left: auto;
     margin-right: auto;
     justify-content: space-between;
@@ -80,6 +80,20 @@ span > svg {
     white-space: pre-line;
 }
 
+
+.containerComment {
+    color: black;
+    background-color: white;
+    box-sizing: border-box;
+    position: relative;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 22px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .gridComment {
     position: relative;
     margin-top: 56px;
@@ -88,14 +102,33 @@ span > svg {
     max-width: 1180px;
     gap: 20px;
     grid-template-areas:
-"one four three"
-"two five three"
-"seven eight six" ;
+        "one four three"
+        "two five three"
+        "seven eight six";
 }
-.containerComment > img{
+
+.containerComment > img {
     width: 100%;
     height: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+    display: block; /* добавьте этот стиль */
 }
+@media screen and (max-width: 600px) {
+    .gridComment {
+        grid-template-areas:
+            "one"
+            "two"
+            "three"
+            "four"
+            "five"
+            "six"
+            "seven"
+            "eight";
+        padding: 0px 10px;
+    }
+}
+
 
 .imgComment {
     width: 44px;
@@ -117,21 +150,9 @@ span > svg {
     padding-right: 10px;
 }
 
-.containerComment {
-    color: black;
-    background-color: white;
-    height: 100%;
-    box-sizing: border-box;
-    position: relative;
-    gap: 10px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: 22px;
-}
-.authButton{
+.authButton {
     text-decoration: none;
-    background-color:blue;
+    background-color: blue;
     box-sizing: border-box;
     cursor: pointer;
     border-radius: 8px;
@@ -142,22 +163,26 @@ span > svg {
     display: flex;
     align-items: center;
 }
-.number{
+
+.number {
     display: block;
     text-decoration: none;
     font-weight: 500;
     font-size: 26px;
     line-height: 120%;
 }
-.aboutTeacher{
+
+.aboutTeacher {
     display: flex;
     flex-direction: column;
-    gap:20px;
+    gap: 20px;
 }
-.aboutTeacher > p{
+
+.aboutTeacher > p {
     color: dimgray;
 }
-a{
+
+a {
     text-decoration: none;
     color: black;
 }
