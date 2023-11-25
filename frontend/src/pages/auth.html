@@ -65,16 +65,24 @@
                     <form id="register-form"
                           style="display: flex; flex-direction: column; gap:20px; padding: 10px 20px;">
                         <label>
+                            <span>Имя</span>
+                            <input placeholder="Паша" id="first-name-register" type="text"/>
+                        </label>
+                        <label>
+                            <span>Фамилия</span>
+                            <input placeholder="Петров" id="last-name-register" type="text"/>
+                        </label>
+                        <label>
                             <span>Почта</span>
-                            <input autofocus id="email-register" type="text"/>
+                            <input placeholder="prostamatika@mail.ru" autofocus id="email-register" type="text"/>
                         </label>
                         <label>
                             <span>Пароль</span>
-                            <input id="password-register" type="password"/>
+                            <input placeholder="Не менее 6 символов" id="password-register" type="password"/>
                         </label>
                         <label>
                             <span>Повторите пароль</span>
-                            <input id="password-confirm-register" type="password"/>
+                            <input placeholder="Повтори пароль" id="password-confirm-register" type="password"/>
                         </label>
                         <span id="error-register" style="align-self: center; display: none"></span>
                         <div style="display: flex; justify-content: center; align-items: center; padding: 10px 0">

@@ -21,12 +21,15 @@ app.get('/', async (req, res) => {
 })
 app.post('/register', async (req, res) => {
     try {
-        const {email, password} = req.body;
+        const {email, password,firstName,lastName} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log(req.body);  // Добавьте эту строку
         const user = await prisma.user.create({
             data: {
                 email: email,
-                password: hashedPassword
+                password: hashedPassword,
+                firstName,
+                lastName,
             }
         })
         const token = jwt.sign({email: user.email, id: user.id}, process.env.JWT_SECRET, {expiresIn: '1d'})
@@ -37,6 +40,7 @@ app.post('/register', async (req, res) => {
         res.status(401).json({
             error: e.message
         })
+        console.log(e.message)
     }
 
 })

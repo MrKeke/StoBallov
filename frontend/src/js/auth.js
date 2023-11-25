@@ -2,6 +2,8 @@ const buttonReg = document.querySelector('#register-button');
 const emailInputReg = document.querySelector('#email-register');
 const passwordInputReg = document.querySelector('#password-register');
 const passwordConfirmInputReg = document.querySelector('#password-confirm-register');
+const firstNameInputReg = document.querySelector('#first-name-register');
+const lastNameInputReg = document.querySelector('#last-name-register');
 const errorReg = document.querySelector('#error-register');
 
 const buttonLogin = document.querySelector('#button-login');
@@ -24,7 +26,7 @@ function showError(elementArray, errorDiv, errorMessage) {
     errorDiv.style.display = 'block';
 }
 
-async function register(email, password) {
+async function register(email, password, firstName, lastName) {
         const response = await fetch('http://localhost:3001/register', {
             method: 'POST',
             headers: {
@@ -32,7 +34,9 @@ async function register(email, password) {
             },
             body: JSON.stringify({
                 email: email,
-                password: password
+                password: password,
+                firstName: firstName,
+                lastName: lastName
             })
         })
         const data = await response.json();
@@ -74,8 +78,10 @@ buttonReg.addEventListener('click', (e) => {
     const email = emailInputReg.value.trim();
     const password = passwordInputReg.value.trim();
     const passwordConfirm = passwordConfirmInputReg.value.trim();
-    if (email === '' || password === '' || passwordConfirm === '') {
-        showError([emailInputReg, passwordInputReg, passwordConfirmInputReg], errorReg, 'Заполните все поля')
+    const firstName = firstNameInputReg.value.trim();
+    const lastName = lastNameInputReg.value.trim();
+    if (email === '' || password === '' || passwordConfirm === '' || firstName === '' || lastName === '') {
+        showError([emailInputReg, passwordInputReg, passwordConfirmInputReg, firstNameInputReg, lastNameInputReg], errorReg, 'Заполните все поля')
     } else if (email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/) === null) {
         showError([emailInputReg], errorReg, 'Введите корректный email')
     } else if (password !== passwordConfirm) {
@@ -83,7 +89,7 @@ buttonReg.addEventListener('click', (e) => {
     } else if (password.length < 6) {
         showError([passwordInputReg, passwordConfirmInputReg], errorReg, 'Пароль должен быть не менее 6 символов');
     } else {
-        register(email, password);
+        register(email, password, firstName, lastName);
     }
 })
 
@@ -94,8 +100,8 @@ buttonLogin.addEventListener('click', (e) => {
     })
     const email = emailInputLogin.value.trim();
     const password = passwordInputLogin.value.trim();
-    if (email === '' || password === '') {
-        showError([emailInputLogin, passwordInputLogin], errorLogin, 'Заполните все поля')
+    if (email === '' || password === '' ) {
+        showError([emailInputLogin, passwordInputLogin ], errorLogin, 'Заполните все поля')
     } else if (email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/) === null) {
         showError([emailInputLogin], errorLogin,'Введите корректный email')
     } else {
