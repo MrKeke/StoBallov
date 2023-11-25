@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Курсы подготовки к ЕГЭ</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <header class="headerContainer">
@@ -23,7 +23,7 @@
             </div>
         </nav>
         <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; align-content: center;gap: 20px; margin-right: 40px">
-            <a href="pages/auth.html">
+            <a id="auth" href="auth.html">
                 <div style="cursor: pointer; align-items: center; display: flex">
                     <svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                          viewBox="0 0 20 20"
@@ -36,6 +36,11 @@
                               fill="currentColor"></path>
                     </svg>
                     Войти
+                </div>
+            </a>
+            <a id="cabinet" style=" display: none" href="cabinet.html">
+                <div style="cursor: pointer; align-items: center; display: flex; font-size: 14px;">
+                    Личный кабинет
                 </div>
             </a>
 
@@ -85,20 +90,12 @@
     </div>
     <div style="padding-top: 160px;">
         <h1 class="aboutH">Контакты Преподавателя</h1>
-        <div style="display: grid; gap:20px; grid-template-areas: 'A C C' 'B C C' 'D C C'; padding-top: 120px; ">
-            <div class="aboutTeacher" style="grid-area: A; justify-content: end">
+        <div style="display: grid; gap:30px; grid-template-areas: 'A C C' 'A C C' 'A C C'; padding-top: 70px; ">
+            <div class="aboutTeacher" style="grid-area: A; justify-content: center">
                 <p>Телефон</p>
                 <a class="number" href="tel:+79264747737">+7 926 474 77 37</a>
-            </div>
-            <div class="aboutTeacher" style="grid-area: B; justify-content: center">
                 <p>Email</p>
                 <a class="number" href="mailto:lizakozinenko@gmail.com">lizakozinenko@gmail.com</a>
-            </div>
-            <div style="grid-area: C; justify-self: center">
-                <img style="border: 1px solid dimgray; border-radius: 12px; object-fit: contain" height="520" width=""
-                     src="img/teacher.JPG" alt="Преподаватель">
-            </div>
-            <div class="aboutTeacher" style="grid-area: D;">
                 <p>Социльные сети</p>
                 <div style="display: flex; flex-direction: row; gap:40px;">
                     <a target="_blank" href="https://vk.com/id1"><img width="64" height="64" src="img/vk.svg.png"
@@ -108,9 +105,12 @@
                                                                               alt="telegramIcon"/></a>
                 </div>
             </div>
+            <div style="grid-area: C; justify-self: start">
+                <img style="border: 1px solid dimgray; border-radius: 12px; object-fit: contain" height="520"
+                     src="img/teacher.JPG" alt="Преподаватель">
+            </div>
         </div>
     </div>
 </main>
 </body>
-<script type="text/javascript" src="javascript/script.js"></script>
 </html>

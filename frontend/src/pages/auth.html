@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+<header>
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 50px;">
+        <a href="index.html">
+            <img src="/img/bigLogo.png" alt="biLogo" style="object-fit: contain; height: 320px; width: 320px;">
+        </a>
+    </div>
+</header>
+<main>
+
+    <div style="display: flex; gap: 30px; flex-direction: row; justify-content: center; align-items: center;">
+        <a href="#AuthModal">
+            <div id="auth" class="auth">
+                <h1 class="aboutH">Авторизация</h1>
+            </div>
+        </a>
+        <a href="#RegistationModal">
+            <div id="registration" class="auth">
+                <h1 class="aboutH">Регистрация</h1>
+            </div>
+        </a>
+
+    </div>
+    <div id="AuthModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Авторизация</h3>
+                    <a href="#closeAuthModal" title="Close" class="close">×</a>
+                </div>
+                <div class="modal-body">
+                    <form id="form-login" style="display: flex; flex-direction: column; gap:20px; padding: 10px 20px">
+                        <label>
+                            <span>Почта</span>
+                            <input autofocus id="email-login" type="text"/>
+                        </label>
+                        <label>
+                            <span>Пароль</span>
+                            <input id="password-login" type="password"/>
+                        </label>
+                        <span id="error-login" style="align-self: center; display: none"></span>
+                        <div style="display: flex; justify-content: center; align-items: center; padding: 10px 0">
+                            <button style="padding: 7px 5px;" id="button-login" type="submit">Отправить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="RegistationModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Регистрация</h3>
+                    <a href="#closeRegistationModal" title="Close" class="close">×</a>
+                </div>
+                <div class="modal-body">
+                    <form id="register-form"
+                          style="display: flex; flex-direction: column; gap:20px; padding: 10px 20px;">
+                        <label>
+                            <span>Почта</span>
+                            <input autofocus id="email-register" type="text"/>
+                        </label>
+                        <label>
+                            <span>Пароль</span>
+                            <input id="password-register" type="password"/>
+                        </label>
+                        <label>
+                            <span>Повторите пароль</span>
+                            <input id="password-confirm-register" type="password"/>
+                        </label>
+                        <span id="error-register" style="align-self: center; display: none"></span>
+                        <div style="display: flex; justify-content: center; align-items: center; padding: 10px 0">
+                            <button style="padding: 7px 5px;" id="register-button" type="submit">Отправить</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
