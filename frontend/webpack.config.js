@@ -29,6 +29,7 @@ function globHtmlPlugins(globPath) {
 module.exports = {
     entry: {...globEntries('./src/css/**/*.css'),...globEntries('./src/js/**/*.js')},
     mode: process.env.NODE_ENV || 'development',
+    devtool: 'source-map',
     devServer: {
         port: 3000,
         open: true,

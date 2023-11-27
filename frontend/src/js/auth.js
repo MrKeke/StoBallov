@@ -27,45 +27,52 @@ function showError(elementArray, errorDiv, errorMessage) {
 }
 
 async function register(email, password, firstName, lastName) {
-        const response = await fetch('http://localhost:3001/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-                firstName: firstName,
-                lastName: lastName
-            })
-        })
-        const data = await response.json();
-        if (response.status === 200) {
-            window.localStorage.setItem("token", data.token);
-            window.location.href = '/';
-        } else if(response.status === 401) {
-            showError([emailInputReg, passwordInputReg, passwordConfirmInputReg], errorReg, 'Пользователь с таким email уже зарегистрирован');
-        }
-
-}
-
-async function login(email, password) {
-    const response = await fetch('http://localhost:3001/login', {
+    const response = await fetch('http://localhost:3001/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             email: email,
-            password: password
+            password: password,
+            firstName: firstName,
+            lastName: lastName
         })
-    });
+    })
     const data = await response.json();
     if (response.status === 200) {
         window.localStorage.setItem("token", data.token);
         window.location.href = '/';
     } else if (response.status === 401) {
-        showError([emailInputLogin, passwordInputLogin], errorLogin, data.error);
+        showError([emailInputReg, passwordInputReg, passwordConfirmInputReg], errorReg, 'Пользователь с таким email уже зарегистрирован');
+    }
+
+}
+
+async function login(email, password) {
+    try {
+        const response = await fetch('http://localhost:3001/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+        const data = await response.json();
+        console.log(data);
+        if (response.status === 200) {
+            window.localStorage.setItem("token", data.token);
+            window.location.href = '/';
+        } else if (response.status === 401) {
+            showError([emailInputLogin, passwordInputLogin], errorLogin, data.error);
+        }
+        return true
+    } catch (e) {
+        console.log(e.message);
+        return false
     }
 }
 
@@ -89,7 +96,9 @@ buttonReg.addEventListener('click', (e) => {
     } else if (password.length < 6) {
         showError([passwordInputReg, passwordConfirmInputReg], errorReg, 'Пароль должен быть не менее 6 символов');
     } else {
-        register(email, password, firstName, lastName);
+        register(email, password, firstName, lastName).then((result) => {
+            console.log(result);
+        });
     }
 })
 
@@ -100,12 +109,14 @@ buttonLogin.addEventListener('click', (e) => {
     })
     const email = emailInputLogin.value.trim();
     const password = passwordInputLogin.value.trim();
-    if (email === '' || password === '' ) {
-        showError([emailInputLogin, passwordInputLogin ], errorLogin, 'Заполните все поля')
+    if (email === '' || password === '') {
+        showError([emailInputLogin, passwordInputLogin], errorLogin, 'Заполните все поля')
     } else if (email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/) === null) {
-        showError([emailInputLogin], errorLogin,'Введите корректный email')
+        showError([emailInputLogin], errorLogin, 'Введите корректный email')
     } else {
-        login(email, password);
+        login(email, password).then((result) => {
+            console.log(result);
+        });
     }
 
 })

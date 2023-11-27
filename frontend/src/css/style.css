@@ -314,8 +314,9 @@ a {
     padding: 15px;
     overflow: auto;
 }
-input{
-    outline:none;
+
+input {
+    outline: none;
 }
 
 form > label {
@@ -326,9 +327,40 @@ form > label {
     gap: 20px;
     align-items: center;
 }
-label > input{
+
+label > input {
     border-radius: 3px;
     border: 1px solid black;
     background-color: #f0f4f9;
     padding: 5px;
 }
+
+.cabinet {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    display: none;
+    cursor: pointer;
+    background-color: #ffd1d1;
+    padding: 10px 10px;
+    border-radius: 22px
+}
+.nav-links{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius:12px;
+    gap:15px;
+    margin-top:10px;
+    padding: 15px;
+    background-color:white;
+}
+.nav-links li a {
+    text-decoration: none;
+    padding: 1rem;
+}
+.displayNone{
+    display: none;
+}
+

@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const cors = require('cors')
 const {PrismaClient} = require('@prisma/client');
 const jwt = require("jsonwebtoken");
+const prisma = new PrismaClient()
+
 
 
 const app = express();
@@ -10,7 +12,6 @@ const port = 3001;
 app.use(express.json())
 app.use(cors())
 
-const prisma = new PrismaClient()
 
 
 app.get('/', async (req, res) => {
@@ -23,15 +24,28 @@ app.post('/register', async (req, res) => {
     try {
         const {email, password,firstName,lastName} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        console.log(req.body);  // Добавьте эту строку
-        const user = await prisma.user.create({
-            data: {
-                email: email,
-                password: hashedPassword,
-                firstName,
-                lastName,
-            }
-        })
+        let user;
+        if(email === 'alexgraf0701@gmail.com'){
+             user = await prisma.user.create({
+                data: {
+                    email: email,
+                    password: hashedPassword,
+                    isAdmin: true,
+                    firstName,
+                    lastName,
+                }
+            })
+        }else{
+             user = await prisma.user.create({
+                data: {
+                    email: email,
+                    password: hashedPassword,
+                    firstName,
+                    lastName,
+                }
+            })
+        }
+
         const token = jwt.sign({email: user.email, id: user.id}, process.env.JWT_SECRET, {expiresIn: '1d'})
         res.json({
             token
@@ -59,6 +73,7 @@ app.get('/session', async (req, res) => {
 app.post('/login', async (req, res) => {
     try {
         const {email, password} = req.body;
+        console.log(req.body);
         const user = await prisma.user.findUnique({
             where: {
                 email: email
@@ -87,31 +102,10 @@ app.post('/login', async (req, res) => {
         })
     }
 })
-app.get('/logout', async (req, res) => {
-    try {
-        const {token} = req.headers
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        await prisma.user.update({
-            where: {
-                id: decoded.id
-            },
-            data: {
-                token: null
-            }
-        })
-        res.json({
-            message: 'Successfully logged out'
-        })
-    } catch (e) {
-        res.status(401).json({
-            error: e.message
-        })
-    }
-})
+
 
 
 app.listen(port, async () => {
     await prisma.$connect();
-
     console.log(`Server is running on port ${port}`);
 });

@@ -1,9 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
-  output = "generated/client"
 }
 
 datasource db {
@@ -12,15 +8,38 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  password String
-  firstName String
-  lastName String
+  id               Int              @id @default(autoincrement())
+  email            String           @unique
+  isAdmin          Boolean          @default(false)
+  password         String
+  firstName        String
+  lastName         String
+  completedLessons Lesson[]
+  feedbackList     FeedBackTicket[]
+  comment          Coments[]
 }
 
-model InviteLession {
-  id Int @id @default(autoincrement())
-  number String @unique
-  fullName String
+model FeedBackTicket {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  creater     User   @relation(fields: [createrId], references: [id])
+  createrId   Int
+}
+
+model Lesson {
+  id             Int    @id @default(autoincrement())
+  title          String
+  description    String
+  youtubeLink    String
+  homework       String
+  date           String
+  complitedUsers User[]
+}
+
+model Coments {
+  id        Int    @id @default(autoincrement())
+  title     String
+  creater   User   @relation(fields: [createrId], references: [id])
+  createrId Int
 }

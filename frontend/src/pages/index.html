@@ -15,9 +15,9 @@
             <img style="margin: 0" src="img/header/logo.png" alt="Logo" width="60" height="50"/>
         </div>
         <nav style="display: flex; flex-direction: row; justify-content: center; align-items: center; align-content: center;gap: 20px">
-        <a href="#aboutTeacher" style="cursor: pointer">
-            О преподавателе
-        </a>
+            <a href="#aboutTeacher" style="cursor: pointer">
+                О преподавателе
+            </a>
             <div style="cursor: pointer">
                 Тарифы
             </div>
@@ -38,13 +38,17 @@
                     Войти
                 </div>
             </a>
-            <a id="cabinet" style=" display: none" href="cabinet.html">
-                <div style="cursor: pointer; align-items: center; display: flex; font-size: 14px;">
-                    Личный кабинет
+            <div>
+                <div id="cabinet" class="flex-row cabinet" style="display: none"></div>
+                <div id="nav-links" class="displayNone">
+                    <ul style="position: fixed" class="nav-links">
+                        <li><a href="cabinet.html">Личный кабинет</a></li>
+                        <li><a id="logout" href="/">Выйти</a></li>
+                    </ul>
                 </div>
-            </a>
+            </div>
 
-            <a class="authButton">
+            <a id="testLesson" class="authButton">
                 Вводный урок
             </a>
         </div>
