@@ -5,7 +5,7 @@ window.onload = async function () {
     const token = window.localStorage.getItem("token");
     if (token) {
         try {
-            const data = await fetch('http://localhost:3001/session', {
+            const data = await fetch('https://lagzya.top:8675/session', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,6 +40,65 @@ function logout() {
     window.href = '/'
 }
 
+
+function deleteLesson() {
+
+    fetch(`https://lagzya.top:8675/lesson/2`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': window.localStorage.getItem("token")
+        },
+    })
+
+}
+function deleteComment() {
+
+    fetch(`https://lagzya.top:8675/comment/1`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': window.localStorage.getItem("token")
+        },
+    })
+
+}
+
+function compliteLesson() {
+    fetch(`https://lagzya.top:8675/lesson/1`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': window.localStorage.getItem("token")
+        },
+    })
+}
+
+function postComment() {
+    fetch('https://lagzya.top:8675/comment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': window.localStorage.getItem("token")
+            },
+            body: JSON.stringify({
+                title: 'test',
+                description: 'test',
+                lessonId: 1,
+            })
+        }
+    )
+}
+
+ function getCommentOnLesson(lessonId = 1) {
+    return fetch(`https://lagzya.top:8675/comment/${lessonId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+}
 
 window.addEventListener('scroll', function () {
     const scrolled = window.scrollY;

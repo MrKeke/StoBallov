@@ -12,7 +12,7 @@ const passwordInputLogin = document.querySelector('#password-login');
 const errorLogin = document.querySelector('#error-login');
 
 window.onload = () => {
-    if (window.localStorage.getItem('token') !== null || undefined) {
+    if (window.localStorage.getItem('token') !== null) {
         window.location.href = '/';
     }
 }
@@ -27,7 +27,7 @@ function showError(elementArray, errorDiv, errorMessage) {
 }
 
 async function register(email, password, firstName, lastName) {
-    const response = await fetch('http://localhost:3001/register', {
+    const response = await fetch('https://lagzya.top:8675/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ async function register(email, password, firstName, lastName) {
 
 async function login(email, password) {
     try {
-        const response = await fetch('http://localhost:3001/login', {
+        const response = await fetch('https://lagzya.top:8675/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -102,6 +102,7 @@ buttonReg.addEventListener('click', (e) => {
     }
 })
 
+// login
 buttonLogin.addEventListener('click', (e) => {
     e.preventDefault();
     [emailInputLogin, passwordInputLogin].forEach(element => {
@@ -118,5 +119,4 @@ buttonLogin.addEventListener('click', (e) => {
             console.log(result);
         });
     }
-
 })

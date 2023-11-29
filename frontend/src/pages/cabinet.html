@@ -9,6 +9,60 @@
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 </head>
 <body>
+<header class="headerContainer" >
+    <div class="header" style="padding: 0">
+        <div style="display: flex; flex-direction: row; align-items: center; margin-left: 50px; cursor: pointer">
+         <a href="index.html"> <img src="img/bigLogo.png" alt="Logo" height="85" width="200"/></a>
+        </div>
+    </div>
+</header>
+<main style="padding-top: 100px; padding-bottom: 400px">
+    <div id="calendar">
+        <div style="display: flex; align-items: center; justify-content: center; gap:15px">
+            <button id="prev">Предыдущий</button>
+            <h2 id="monthYear"></h2>
+            <button id="next">Следующий</button>
+        </div>
+        <div>
+            <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); align-items: end; justify-content: center; margin: 30px 0 5px 0"
+                 id="days">
+            </div>
+            <div id="dates"
+                 style="display: grid; gap:1px; grid-template-columns: repeat(7, minmax(0, 1fr));margin: 10px"></div>
+        </div>
 
+    </div>
+
+</main>
+<div id="myModal" class="modal-admin">
+    <div class="modal-content">
+        <span class="close">x</span>
+        <form style="display: flex; gap: 10px; flex-direction: column; justify-content: space-between;">
+            <label>
+                <span>Заголовок</span>
+                <input id="form-title" placeholder="Урок по математике"/>
+            </label>
+            <label>
+                <span>Текст урока</span>
+                <input id="form-description" placeholder="Сложные формулы"/>
+            </label>
+            <label>
+                <span>Ссылка на запись</span>
+                <input id="form-youtube" placeholder="www.youtube.com"/>
+            </label>
+            <label>
+                <span>Домашнее задание</span>
+                <input  id="form-homework" placeholder="Написать сложные формулы"/>
+            </label>
+            <button id="btn-admin-form" style="width: 100px; margin: 10px auto;">Прикрепить</button>
+        </form>
+    </div>
+</div>
+<div id="lessonModal" class="modal-admin">
+    <div class="modal-content">
+        <span class="close">x</span>
+
+    </div>
+</div>
 </body>
 </html>

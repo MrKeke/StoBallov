@@ -16,30 +16,34 @@ model User {
   lastName         String
   completedLessons Lesson[]
   feedbackList     FeedBackTicket[]
-  comment          Coments[]
+  comment          Comments[]
 }
 
 model FeedBackTicket {
   id          Int    @id @default(autoincrement())
   title       String
   description String
-  creater     User   @relation(fields: [createrId], references: [id])
-  createrId   Int
+  author      User   @relation(fields: [authorId], references: [id])
+  authorId    Int
 }
 
 model Lesson {
-  id             Int    @id @default(autoincrement())
+  id             Int        @id @default(autoincrement())
   title          String
   description    String
   youtubeLink    String
   homework       String
-  date           String
-  complitedUsers User[]
+  dateStart      DateTime
+  completedUsers User[]
+  Coments        Comments[]
 }
 
-model Coments {
-  id        Int    @id @default(autoincrement())
-  title     String
-  creater   User   @relation(fields: [createrId], references: [id])
-  createrId Int
+model Comments {
+  id          Int      @id @default(autoincrement())
+  description String
+  creater     User     @relation(fields: [authorId], references: [id])
+  authorId    Int
+  lesson      Lesson   @relation(fields: [lessonId], references: [id])
+  lessonId    Int
+  createAt    DateTime @default(now())
 }
