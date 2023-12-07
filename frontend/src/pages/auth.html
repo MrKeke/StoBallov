@@ -39,7 +39,7 @@
                     <form id="form-login" style="display: flex; flex-direction: column; gap:20px; padding: 10px 20px">
                         <label>
                             <span>Почта</span>
-                            <input autofocus id="email-login" type="text"/>
+                            <input autocomplete="off" autofocus id="email-login" type="text"/>
                         </label>
                         <label>
                             <span>Пароль</span>
@@ -68,13 +68,15 @@
                             <span>Имя</span>
                             <input placeholder="Паша" id="first-name-register" type="text"/>
                         </label>
+
+
                         <label>
                             <span>Фамилия</span>
                             <input placeholder="Петров" id="last-name-register" type="text"/>
                         </label>
                         <label>
                             <span>Почта</span>
-                            <input placeholder="prostamatika@mail.ru" autofocus id="email-register" type="text"/>
+                            <input autocomplete="off" placeholder="prostamatika@mail.ru" autofocus id="email-register" type="text"/>
                         </label>
                         <label>
                             <span>Пароль</span>
@@ -83,6 +85,17 @@
                         <label>
                             <span>Повторите пароль</span>
                             <input placeholder="Повтори пароль" id="password-confirm-register" type="password"/>
+                        </label>
+                        <label>
+                            <span>Этап обучения</span>
+                            <label>
+                                <input id="nine" type="radio" name="grade" placeholder="9" value="9"/>
+                                <span>9 Класс</span>
+                            </label>
+                            <label>
+                                <input id="eleven" type="radio" name="grade" placeholder="11" value="11"/>
+                                <span>11 Класс</span>
+                            </label>
                         </label>
                         <span id="error-register" style="align-self: center; display: none"></span>
                         <div style="display: flex; justify-content: center; align-items: center; padding: 10px 0">

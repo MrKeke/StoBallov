@@ -1,11 +1,15 @@
 const header = document.querySelector('header')
 const navLinks = document.querySelector("#nav-links")
+const modal = document.getElementById("feedBackModal");
+const span = document.getElementsByClassName("close")[0];
+const feedBackTitle = document.getElementById("feedbackTitle");
+const feedBackDescription = document.getElementById("feedbackDescription")
 
 window.onload = async function () {
     const token = window.localStorage.getItem("token");
     if (token) {
         try {
-            const data = await fetch('https://lagzya.top:8675/session', {
+            const data = await fetch('http://localhost:3001/session', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -17,9 +21,7 @@ window.onload = async function () {
             const fullName = `${user.user.firstName.slice(0, 1)}${user.user.lastName.slice(0, 1)}`
             const authDiv = document.querySelector('#auth')
             const cabinet = document.querySelector('#cabinet')
-            const testLesson = document.querySelector('#testLesson')
             authDiv.style.display = 'none';
-            testLesson.style.display = 'none';
             cabinet.style.display = 'block';
             cabinet.textContent = fullName;
 
@@ -40,66 +42,6 @@ function logout() {
     window.href = '/'
 }
 
-
-function deleteLesson() {
-
-    fetch(`https://lagzya.top:8675/lesson/2`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'token': window.localStorage.getItem("token")
-        },
-    })
-
-}
-function deleteComment() {
-
-    fetch(`https://lagzya.top:8675/comment/1`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'token': window.localStorage.getItem("token")
-        },
-    })
-
-}
-
-function compliteLesson() {
-    fetch(`https://lagzya.top:8675/lesson/1`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            'token': window.localStorage.getItem("token")
-        },
-    })
-}
-
-function postComment() {
-    fetch('https://lagzya.top:8675/comment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'token': window.localStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                title: 'test',
-                description: 'test',
-                lessonId: 1,
-            })
-        }
-    )
-}
-
- function getCommentOnLesson(lessonId = 1) {
-    return fetch(`https://lagzya.top:8675/comment/${lessonId}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-
-}
-
 window.addEventListener('scroll', function () {
     const scrolled = window.scrollY;
 
@@ -117,5 +59,31 @@ document.querySelector("#cabinet").addEventListener("click", () => {
 });
 document.querySelector("#logout").addEventListener("click", () => {
     logout()
+})
+
+document.querySelector('#feedBack').addEventListener('click', () => {
+    modal.style.display = "block";
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+})
+document.querySelector('#feedbackSend').addEventListener('click',(e)=>{
+    e.preventDefault();
+    const title = feedBackTitle.value
+    const description = feedBackDescription.value
+
+    fetch('http://localhost:3001/feedback',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json',token: token ? token : ''},
+        body: JSON.stringify({
+            title,description
+        })
+    })
+    span.click()
 })
 

@@ -14,6 +14,7 @@ model User {
   password         String
   firstName        String
   lastName         String
+  grade            Int
   completedLessons Lesson[]
   feedbackList     FeedBackTicket[]
   comment          Comments[]
@@ -33,6 +34,7 @@ model Lesson {
   description    String
   youtubeLink    String
   homework       String
+  forGrade       Int
   dateStart      DateTime
   completedUsers User[]
   Coments        Comments[]

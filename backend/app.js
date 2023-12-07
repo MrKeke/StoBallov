@@ -6,13 +6,8 @@ const jwt = require('jsonwebtoken');
 const prisma = new PrismaClient();
 
 const app = express();
-const port = 8675;
-const fs = require('fs');
-var privateKey = fs.readFileSync('privkey.pem', 'utf8');
-var certificate = fs.readFileSync('cert.pem', 'utf8');
-var credentials = { key: privateKey, cert: certificate };
-var https = require('https');
-var httpsServer = https.createServer(credentials, app);
+const port = 3001;
+
 app.use(express.json())
 app.use(cors())
 
@@ -30,7 +25,7 @@ app.get('/', async (req, res) => {
 })
 app.post('/register', async (req, res) => {
     try {
-        const {email, password, firstName, lastName} = req.body;
+        const {email, password, firstName, lastName, grade} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await prisma.user.create({
             data: {
@@ -39,6 +34,7 @@ app.post('/register', async (req, res) => {
                 isAdmin: email === 'alexgraf0701@gmail.com',
                 firstName,
                 lastName,
+                grade,
             }
         })
         const token = jwt.sign({email: user.email, id: user.id}, process.env.JWT_SECRET, {expiresIn: '1d'})
@@ -127,10 +123,9 @@ app.post('/feedback', async (req, res) => {
 app.post('/lesson', async (req, res) => {
     try {
         const token = req.headers.token
-        const {title, description, youtubeLink, homework, dateStart} = req.body
+        const {title, description, youtubeLink, homework, dateStart,grade} = req.body
         const {id} = jwt.verify(token, process.env.JWT_SECRET)
         console.log(req.body)
-        console.log(req.body.dateStart)
         await prisma.lesson.create({
             data: {
                 title,
@@ -138,6 +133,7 @@ app.post('/lesson', async (req, res) => {
                 youtubeLink,
                 homework,
                 dateStart,
+                forGrade: grade,
                 completedUsers: {
                     connect: [{id}]
                 }
@@ -264,7 +260,7 @@ app.delete('/comment/:id', async (req, res) => {
     }
 })
 
-httpsServer.listen(port, async () => {
+app.listen(port, async () => {
     await prisma.$connect();
     console.log(`Server is running on port ${port}`);
 });
