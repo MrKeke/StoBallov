@@ -5,6 +5,7 @@ const span = document.getElementsByClassName("close")[0];
 const feedBackTitle = document.getElementById("feedbackTitle");
 const feedBackDescription = document.getElementById("feedbackDescription")
 
+// При загрузке проверка на пользователя
 window.onload = async function () {
     const token = window.localStorage.getItem("token");
     if (token) {
@@ -18,6 +19,7 @@ window.onload = async function () {
             }).then(response => response.json());
             window.localStorage.setItem("user", JSON.stringify(data));
             const user = JSON.parse(window.localStorage.getItem("user"))
+            // Вывод личного кабинета
             const fullName = `${user.user.firstName.slice(0, 1)}${user.user.lastName.slice(0, 1)}`
             const authDiv = document.querySelector('#auth')
             const cabinet = document.querySelector('#cabinet')
@@ -26,6 +28,7 @@ window.onload = async function () {
             cabinet.textContent = fullName;
 
         } catch (error) {
+            // на случай ошибок
             console.log(error);
             window.localStorage.removeItem("token");
             window.localStorage.removeItem("user");
@@ -42,6 +45,7 @@ function logout() {
     window.href = '/'
 }
 
+// Логика хедера и его скрытия
 window.addEventListener('scroll', function () {
     const scrolled = window.scrollY;
 
@@ -54,9 +58,11 @@ window.addEventListener('scroll', function () {
 
     }
 });
+// переход в личный кабинет
 document.querySelector("#cabinet").addEventListener("click", () => {
     navLinks.classList.toggle("displayNone");
 });
+// Выход
 document.querySelector("#logout").addEventListener("click", () => {
     logout()
 })
@@ -76,7 +82,7 @@ document.querySelector('#feedbackSend').addEventListener('click',(e)=>{
     e.preventDefault();
     const title = feedBackTitle.value
     const description = feedBackDescription.value
-
+// сохранение фидбека на сервер
     fetch('http://localhost:3001/feedback',{
         method: 'POST',
         headers: {'Content-Type': 'application/json',token: token ? token : ''},

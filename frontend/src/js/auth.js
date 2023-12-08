@@ -13,6 +13,7 @@ const emailInputLogin = document.querySelector('#email-login');
 const passwordInputLogin = document.querySelector('#password-login');
 const errorLogin = document.querySelector('#error-login');
 
+// проверка на токен при загрузке
 window.onload = () => {
     if (window.localStorage.getItem('token') !== null) {
         window.location.href = '/';
