@@ -3,49 +3,49 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "sqlite" // Вид базы данных
+  url      = env("DATABASE_URL") // тут лежит название файла базы данных
 }
 
-model User {
-  id               Int              @id @default(autoincrement())
-  email            String           @unique
-  isAdmin          Boolean          @default(false)
-  password         String
-  firstName        String
-  lastName         String
-  grade            Int
-  completedLessons Lesson[]
-  feedbackList     FeedBackTicket[]
-  comment          Comments[]
+model User { // Описание стуктуры пользователя
+  id               Int              @id @default(autoincrement()) // уникальный айди пользователя вычисляется сам
+  email            String           @unique // почта пользователя
+  isAdmin          Boolean          @default(false) // Администратор ли пользователь
+  password         String // пароль позователя
+  firstName        String // Имя пользователя
+  lastName         String // Фамилия пользователя
+  grade            Int // Класс пользователя 9 или 11
+  completedLessons Lesson[] // выполненные уроки пользователем. связана с базой уроков
+  feedbackList     FeedBackTicket[] // Обратная связь пользователя. связана с базой обратных листов
+  comment          Comments[] // коментарии пользователя. cвязана с базой комментариев
 }
 
-model FeedBackTicket {
-  id          Int    @id @default(autoincrement())
-  title       String
-  description String
-  author      User   @relation(fields: [authorId], references: [id])
-  authorId    Int
+model FeedBackTicket { // описание структуры обратной связи
+  id          Int    @id @default(autoincrement()) // уникальный айди тикета вычисляется сам
+  title       String // заголовк тикета
+  description String // пояснение тикета основная часть
+  author      User   @relation(fields: [authorId], references: [id]) // автор тикета. связь с базой пользователей
+  authorId    Int // уникальный айди автора тикета
 }
 
-model Lesson {
-  id             Int        @id @default(autoincrement())
-  title          String
-  description    String
-  youtubeLink    String
-  homework       String
-  forGrade       Int
-  dateStart      DateTime
-  completedUsers User[]
-  Coments        Comments[]
+model Lesson { // описание структуры уроков
+  id             Int        @id @default(autoincrement()) // уникальный айди урока вычисляется сам
+  title          String // заголовок урока
+  description    String // пояснение урока
+  youtubeLink    String // сылка на запись урока
+  homework       String // домашнее задание урока
+  forGrade       Int // для 9 или 11 класса
+  dateStart      DateTime // дата на которую записан урок
+  completedUsers User[] // массив учеников выполнивших урок
+  Coments        Comments[] // комментарии к уроку
 }
 
-model Comments {
-  id          Int      @id @default(autoincrement())
-  description String
-  creater     User     @relation(fields: [authorId], references: [id])
-  authorId    Int
-  lesson      Lesson   @relation(fields: [lessonId], references: [id])
-  lessonId    Int
-  createAt    DateTime @default(now())
+model Comments { // описание структуры комментариев
+  id          Int      @id @default(autoincrement()) // // уникальный айди комментария вычисляется сам
+  description String // пояснение комментария
+  creater     User     @relation(fields: [authorId], references: [id]) // создатель коммнтария
+  authorId    Int // уникальный айди создателя
+  lesson      Lesson   @relation(fields: [lessonId], references: [id]) // урок к которому привязан комментарий
+  lessonId    Int // уникальный айди урока
+  createAt    DateTime @default(now()) // когда создан комментарий
 }

@@ -1,24 +1,24 @@
-let isAdmin = JSON.parse(window.localStorage.getItem("user")).user.isAdmin
-const header = document.querySelector('header')
-const radioButtonReg9 = document.querySelector('#nine')
-const token = window.localStorage.getItem('token');
-const userGrade = JSON.parse(window.localStorage.getItem("user")).user.grade
-const btnAdminForm = document.getElementById("btn-admin-form");
-const formTitle = document.getElementById("form-title");
-const formDescription = document.getElementById("form-description");
-const formYoutube = document.getElementById("form-youtube");
-const formHomework = document.getElementById("form-homework");
-const lessonTitle = document.getElementById("lessonTitle");
-const lessonDescription = document.getElementById("lessonDescription");
-const lessonYoutube = document.getElementById("lessonYoutube");
-const lessonHomework = document.getElementById("lessonHomework");
+let isAdmin = JSON.parse(window.localStorage.getItem("user")).user.isAdmin // проверка на администратора
+const header = document.querySelector('header') // поиск верхнего окна в документе
+const radioButtonReg9 = document.querySelector('#nine') // поиск выбора класса в форме в документе
+const token = window.localStorage.getItem('token'); // читаем токен из хранилища сайта
+const userGrade = JSON.parse(window.localStorage.getItem("user")).user.grade // читаем пользователя из хранилища сайта
+const btnAdminForm = document.getElementById("btn-admin-form"); // ищем в документе кнопку отправки урока админом
+const formTitle = document.getElementById("form-title"); // ищем в документе форму заголовка в админ форме
+const formDescription = document.getElementById("form-description"); // ищем в документе форму тела в админ форме
+const formYoutube = document.getElementById("form-youtube"); // ищем в документе форму ссылки в админ форме
+const formHomework = document.getElementById("form-homework"); // ищем в документе форму дз в админ форме
+const lessonTitle = document.getElementById("lessonTitle"); // ищем в документе заголовка урока в вспылвающем окне
+const lessonDescription = document.getElementById("lessonDescription"); // ищем в документе тело урока в всплыващем окне
+const lessonYoutube = document.getElementById("lessonYoutube"); // ищем в документе ссылку на дз урока
+const lessonHomework = document.getElementById("lessonHomework"); // ищем в документе дз урока
 
 
-window.onload = async function () {
+window.onload = async function () { // при загрузке проверям не зашел ли случайно гость
     if (token === null) {
-        window.href = '/'
+        window.href = '/' // если гость отправляем на главную страницу
     }
-    const scrolled = window.scrollY;
+    const scrolled = window.scrollY; // прячем верхнее окно если пользователь низко на странице
     if (scrolled > 20) {
         header.classList.add('out');
     } else {
@@ -26,7 +26,7 @@ window.onload = async function () {
 
     }
 }
-
+// логика создания календаря начало
 let date = new Date();
 let month = date.getMonth();
 let year = date.getFullYear();
@@ -45,40 +45,39 @@ const monthDecoded = {
     11: "Декабрь",
 }
 
-function includeDate(mapped, date) {
-    let currentLesson = mapped.filter((lesson) => {
+function includeDate(mapped, date) { // фунецию отбора из уроков нужного по дате
+    let currentLesson = mapped.filter((lesson) => { // ищем нужный
         return lesson.dateStart === date
     })
-    if (currentLesson[0]) {
-        const div = document.createElement('div')
-        div.textContent = currentLesson[0].title
-        div.id = currentLesson[0].id
-        div.classList.add('titleLesson')
-        console.log(div)
-        return div
+    if (currentLesson[0]) { // если он есть то
+        const div = document.createElement('div') // создаем новый компонент
+        div.textContent = currentLesson[0].title // ставим текстом компонента заголовок
+        div.id = currentLesson[0].id // ставим айди для дальнейшей логики
+        div.classList.add('titleLesson') // добавляем стиль
+        return div // возвращаем его для дальнейшей работы
     } else {
-        return null
+        return null // иначе возвращаем ничего
     }
 
 
 }
 
 async function load() {
-    const response = await fetch('http://localhost:3001/lessons', {
-        method: 'GET',
+    const response = await fetch('http://localhost:3001/lessons', { // запрос на получение всех уроков с сервера
+        method: 'GET', // метод получения получить
         headers: {
-            'Content-Type': 'application/json',
-            'token': window.localStorage.getItem('token'),
+            'Content-Type': 'application/json', // тип данных
+            'token': window.localStorage.getItem('token'), // даем токен
         }
     });
-    const data = await response.json()
+    const data = await response.json() // дожидаемся
     const mapped = data.lessons.map((lesson) => {
-        const newDate = new Date(lesson.dateStart).toLocaleDateString('en-GB').split('/')
+        const newDate = new Date(lesson.dateStart).toLocaleDateString('en-GB').split('/') // делаем дату в нормальный вид
         newDate[0] = Number(newDate[0])
         lesson.dateStart = newDate.join('-')
         return lesson
-    }).filter((lesson) => {
-        if (isAdmin) {
+    }).filter((lesson) => { // логика показа 9ому класса уроков для 9го класса и 11го
+        if (isAdmin) {  // если администратор показывать все
             return true
         } else {
             return lesson.forGrade === userGrade
@@ -275,10 +274,6 @@ async function load() {
             }
         })
     })
-    const commentInput = document.getElementById('commentInput')
-    // document.getElementById('commentSend').addEventListener('click', ()=>{
-    //     fetch
-    //
     // })
 }
 

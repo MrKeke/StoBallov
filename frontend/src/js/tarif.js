@@ -1,9 +1,9 @@
-const category = document.querySelectorAll('.categoryPrice')
-const perYerDiscount = document.querySelector('#perYerDiscount')
-const perYer = document.querySelector('#perYer')
-const perMonth = document.querySelector('#perMonth')
-const perMonthDiscount = document.querySelector('#perMonthDiscount')
-const prices = {
+const category = document.querySelectorAll('.categoryPrice') // поиск в документе катеоргий тарифов
+const perYerDiscount = document.querySelector('#perYerDiscount') // поиск в документе скдику года
+const perYer = document.querySelector('#perYer') // поиск в документе цену за год
+const perMonth = document.querySelector('#perMonth') // поиск в документе цену за месяц
+const perMonthDiscount = document.querySelector('#perMonthDiscount') // поиск в документе скдики месяца
+const prices = { // обозначаем цены и скидки всех тарифов
     selfTeaching: {
         perYerDiscount: '17 500 ₽',
         perYer: '16 000 ₽',
@@ -24,14 +24,14 @@ const prices = {
     }
 
 }
-category.forEach((span) => {
-    span.addEventListener('click', (e) => {
-        const {id} = e.target
-        perMonth.textContent = prices[id].perMonth
-        perYer.textContent = prices[id].perYer
-        perMonthDiscount.textContent = prices[id].perMonthDiscount
-        perYerDiscount.textContent = prices[id].perYerDiscount
-         category.forEach((sp)=> sp.classList.remove('active'))
+category.forEach((span) => { // проходимся по всем категориям
+    span.addEventListener('click', (e) => { // добавляем к ним действие по клику
+        const {id} = e.target // смотрим какой из категорий выбрали
+        perMonth.textContent = prices[id].perMonth // ставим цену за месяц
+        perYer.textContent = prices[id].perYer // ставим цену за год
+        perMonthDiscount.textContent = prices[id].perMonthDiscount // ставим скидку за месяц
+        perYerDiscount.textContent = prices[id].perYerDiscount // ставим скидку за год
+         category.forEach((sp)=> sp.classList.remove('active')) // переключаем выбранное
         e.target.classList.add('active')
     })
 })
