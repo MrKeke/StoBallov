@@ -29,7 +29,7 @@ function showError(elementArray, errorDiv, errorMessage) { // функцию п�
 }
 
 async function register(email, password, firstName, lastName, grade) { // функция на запрос регистрации
-    const response = await fetch('http://localhost:3001/register', { // запрос на сервер с регистрацие пользователя
+    const response = await fetch('https://lagzya.top:8675//register', { // запрос на сервер с регистрацие пользователя
         method: 'POST', // метод отправка
         headers: {
             'Content-Type': 'application/json' // тип передаваемых данных
@@ -53,7 +53,7 @@ async function register(email, password, firstName, lastName, grade) { // фун
 }
 
 async function login(email, password) { // функция запроса на логин
-    const response = await fetch('http://localhost:3001/login', { // запрос логина на сервер
+    const response = await fetch('https://lagzya.top:8675//login', { // запрос логина на сервер
         method: 'POST', // метод отправка
         headers: {
             'Content-Type': 'application/json' // тип отправляемых данных
@@ -70,6 +70,7 @@ async function login(email, password) { // функция запроса на л
     } else if (response.status === 401) { // если ошибка то
         showError([emailInputLogin, passwordInputLogin], errorLogin, data.error); // отображаем ошибку и ее текст в выбранных полях
     }
+    return  true
 }
 
 // register

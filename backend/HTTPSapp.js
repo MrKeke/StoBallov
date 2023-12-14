@@ -1,16 +1,20 @@
-const express = require('express'); // приложение нужное для работы базы данных
-const bcrypt = require('bcrypt'); // шифратор паролей чтобы они не хранились так
-const cors = require('cors'); // политика не позволяющая всем подключаться к базе
-const {PrismaClient} = require('@prisma/client'); // подключение структуры базы данных
-const jwt = require('jsonwebtoken'); // токен для подтверждения наличия в базе
-const prisma = new PrismaClient();  // визуализация базы в файле
+const express = require('express');
+const bcrypt = require('bcrypt');
+const cors = require('cors');
+const { PrismaClient } = require('@prisma/client');
+const jwt = require('jsonwebtoken');
+const prisma = new PrismaClient();
 
-const app = express(); // обозначение приложения для работы базы данных
-const port = 3001; // порт на котором будет работать база
-
-app.use(express.json()) // обозначение вида базы данных
-app.use(cors()) // устанавливаем политику для базы данных
-
+const app = express();
+const port = 8675;
+const fs = require('fs');
+var privateKey = fs.readFileSync('privkey.pem', 'utf8');
+var certificate = fs.readFileSync('cert.pem', 'utf8');
+var credentials = { key: privateKey, cert: certificate };
+var https = require('https');
+var httpsServer = https.createServer(credentials, app);
+app.use(express.json())
+app.use(cors())
 
 app.get('/', async (req, res) => { // устанавливаем страницу для просмотра всей базы данных
     const users = await prisma.user.findMany({}) // получаем с базы всех пользователей
@@ -18,7 +22,10 @@ app.get('/', async (req, res) => { // устанавливаем страниц�
     const comments = await prisma.comments.findMany({}) // получаем все комментарии
     const feedback = await prisma.feedBackTicket.findMany({}) // получаем все тикеты с базы
     res.json({ // отображаем их
-        users, lessons, comments, feedback,
+        users,
+        lessons,
+        comments,
+        feedback,
     })
 })
 app.post('/register', async (req, res) => { // устанавливаем страницу регистрация пользователя
@@ -120,7 +127,7 @@ app.post('/feedback', async (req, res) => { // создаем тике на фи
 app.post('/lesson', async (req, res) => { // запрос на создание в базе урока
     try { // пробуем сделать то что ниже чтобы в случае ошибки ничего не сломать
         const token = req.headers.token // получаем токен
-        const {title, description, youtubeLink, homework, dateStart, grade} = req.body // получаем данные для создания урока
+        const {title, description, youtubeLink, homework, dateStart,grade} = req.body // получаем данные для создания урока
         const {id} = jwt.verify(token, process.env.JWT_SECRET) // из токена берем id
         await prisma.lesson.create({ // создаем урок в бд
             data: {
@@ -143,10 +150,10 @@ app.post('/lesson', async (req, res) => { // запрос на создание 
     }
 })
 app.get('/lessons', async (req, res) => { // запрос на получение всех уроков из бд
-    try { // пробуем сделать то что ниже чтобы в случае ошибки ничего не сломать
+    try{ // пробуем сделать то что ниже чтобы в случае ошибки ничего не сломать
         const lessons = await prisma.lesson.findMany({}) // получаем из базы все кроки
         res.status(200).json({lessons: lessons}) // возвращаем уроки
-    } catch (e) { // ловим ошибку
+    }catch (e){ // ловим ошибку
         res.status(401).json({
             error: e.message // возвращаем ошибку
         })
@@ -155,7 +162,7 @@ app.get('/lessons', async (req, res) => { // запрос на получени�
 app.delete('/lesson/:id', async (req, res) => { // запрос на удаление урока
     try { // пробуем сделать то что ниже чтобы в случае ошибки ничего не сломать
         const lessonID = req.params.id; // получаем айди урока
-        await prisma.lesson.delete({ // удаляем из базы урок
+         await prisma.lesson.delete({ // удаляем из базы урок
             where: {id: Number(lessonID)} // поиск и удаление
         })
         res.status(200) // возвращаем что все хорошо
@@ -166,16 +173,18 @@ app.delete('/lesson/:id', async (req, res) => { // запрос на удале�
 app.post('/comment', async (req, res) => { // запрос на создание комментария
     try { // пробуем сделать то что ниже чтобы в случае ошибки ничего не сломать
         const token = req.headers.token;
-        const {description, lessonId} = req.body;
+        const { description, lessonId } = req.body;
         console.log(req.body);
         const user = jwt.verify(token, process.env.JWT_SECRET);
 
-        await prisma.comments.create({
+         await prisma.comments.create({
             data: {
-                description: description, creater: {
-                    connect: {id: user.id}
-                }, lesson: {
-                    connect: {id: parseInt(lessonId)}
+                description: description,
+                creater: {
+                    connect: { id: user.id }
+                },
+                lesson: {
+                    connect: { id: parseInt(lessonId) }
                 },
             },
         });
@@ -192,16 +201,21 @@ app.get('/comment/:id', async (req, res) => {
         const comments = await prisma.comments.findMany({
             where: {
                 lessonId: Number(id)
-            }, include: {
+            },
+            include: {
                 creater: {
                     select: {
-                        firstName: true, lastName: true
+                        firstName: true,
+                        lastName: true
                     }
                 }
             }
         });
 
-        const formattedComments = comments.map(comment => [`${comment.creater.firstName} ${comment.creater.lastName}`, comment.description]);
+        const formattedComments = comments.map(comment => [
+            `${comment.creater.firstName} ${comment.creater.lastName}`,
+            comment.description
+        ]);
 
         res.status(200).json({
             lessons: formattedComments
@@ -216,7 +230,7 @@ app.get('/comment/:id', async (req, res) => {
 app.delete('/comment/:id', async (req, res) => { // запрос на удаление комментария
     try { // пробуем сделать то что ниже чтобы в случае ошибки ничего не сломать
         const commentID = req.params.id; // получаем айди комментария
-        await prisma.comments.delete({ // удаление комменатрия
+         await prisma.comments.delete({ // удаление комменатрия
             where: {id: Number(commentID)}// поиск и удаление
         })
         res.status(200) // возращаем успех
@@ -225,7 +239,7 @@ app.delete('/comment/:id', async (req, res) => { // запрос на удале
     }
 })
 
-app.listen(port, async () => { // база работает на порту указанным ниже
-    await prisma.$connect(); // подключение к базе
-    console.log(`Server is running on port ${port}`); // сообщение об успешной начале работы
+httpsServer.listen(port, async () => {
+    await prisma.$connect();
+    console.log(`Server is running on port ${port}`);
 });

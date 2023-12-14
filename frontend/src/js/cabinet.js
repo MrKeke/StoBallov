@@ -12,7 +12,8 @@ const lessonTitle = document.getElementById("lessonTitle"); // ищем в до�
 const lessonDescription = document.getElementById("lessonDescription"); // ищем в документе тело урока в всплыващем окне
 const lessonYoutube = document.getElementById("lessonYoutube"); // ищем в документе ссылку на дз урока
 const lessonHomework = document.getElementById("lessonHomework"); // ищем в документе дз урока
-
+let openedLesson = -1; // открытый урок
+const commentContainer = document.getElementById("commentContainer");
 
 window.onload = async function () { // при загрузке проверям не зашел ли случайно гость
     if (token === null) {
@@ -63,7 +64,7 @@ function includeDate(mapped, date) { // фунецию отбора из уро�
 }
 
 async function load() {
-    const response = await fetch('http://localhost:3001/lessons', { // запрос на получение всех уроков с сервера
+    const response = await fetch('https://lagzya.top:8675//lessons', { // запрос на получение всех уроков с сервера
         method: 'GET', // метод получения получить
         headers: {
             'Content-Type': 'application/json', // тип данных
@@ -88,7 +89,6 @@ async function load() {
     let days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     let daysDiv = document.getElementById('days');
     days.forEach(day => {
-        let time = `${day}-${month + 1}-${year}`;
         let div = document.createElement('div');
         div.textContent = day;
         daysDiv.appendChild(div);
@@ -98,7 +98,7 @@ async function load() {
     let firstDayOfMonth = new Date(year, month, 1).getDay();
     let daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    for (let i = 0; i < firstDayOfMonth; i++) {
+    for (let i = 1; i < firstDayOfMonth; i++) {
         let div = document.createElement('div')
         div.classList.add('day');
         div.classList.add('blackDay');
@@ -113,7 +113,6 @@ async function load() {
         const divTitle = includeDate(mapped, `${i}-${month + 1}-${year}`)
         if (divTitle !== null) {
             div.appendChild(divTitle);
-            console.log(div)
         } else if (isAdmin) {
             const spanAdmin = document.createElement('span');
             spanAdmin.classList.add('addSomething')
@@ -133,7 +132,7 @@ async function load() {
         datesDiv.innerHTML = '';
         firstDayOfMonth = new Date(year, month, 1).getDay();
         daysInMonth = new Date(year, month + 1, 0).getDate();
-        for (let i = 0; i < firstDayOfMonth; i++) {
+        for (let i = 1; i < firstDayOfMonth; i++) {
             let div = document.createElement('div');
             div.classList.add('day');
             div.classList.add('blackDay');
@@ -147,7 +146,6 @@ async function load() {
             const divTitle = includeDate(mapped, `${i}-${month + 1}-${year}`)
             if (divTitle !== null) {
                 div.appendChild(divTitle);
-                console.log(div)
 
             } else if (isAdmin) {
                 const spanAdmin = document.createElement('span');
@@ -169,7 +167,7 @@ async function load() {
         datesDiv.innerHTML = '';
         firstDayOfMonth = new Date(year, month, 1).getDay();
         daysInMonth = new Date(year, month + 1, 0).getDate();
-        for (let i = 0; i < firstDayOfMonth; i++) {
+        for (let i = 1; i < firstDayOfMonth; i++) {
             let div = document.createElement('div');
             div.classList.add('day');
             div.classList.add('blackDay');
@@ -183,7 +181,6 @@ async function load() {
             const divTitle = includeDate(mapped, `${i}-${month + 1}-${year}`)
             if (divTitle !== null) {
                 div.appendChild(divTitle);
-                console.log(div)
 
             } else if (isAdmin) {
                 const spanAdmin = document.createElement('span');
@@ -216,7 +213,7 @@ async function load() {
                 }
                 modal.firstElementChild.dataset['time'] = addSpan.parentNode.dataset.time
                 window.onclick = function (event) {
-                    if (event.target == modal) {
+                    if (event.target === modal) {
                         modal.style.display = "none";
                     }
                 }
@@ -226,7 +223,6 @@ async function load() {
 
     function parseDateStringToDateTime(dateString) {
         const dateParts = dateString.split('-');
-        const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
         return new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]).toISOString();
     }
 
@@ -240,13 +236,10 @@ async function load() {
         e.preventDefault();
         const dataTime = modal.firstElementChild.dataset.time
         const radio9 = radioButtonReg9.checked
-        fetch(`http://localhost:3001/lesson`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'token': window.localStorage.getItem("token")
-            },
-            body: JSON.stringify({
+        fetch(`https://lagzya.top:8675//lesson`, {
+            method: 'POST', headers: {
+                'Content-Type': 'application/json', 'token': window.localStorage.getItem("token")
+            }, body: JSON.stringify({
                 title: formTitle.value,
                 description: formDescription.value,
                 youtubeLink: formYoutube.value,
@@ -257,24 +250,58 @@ async function load() {
         })
         clearForm([formTitle, formDescription, formYoutube, formHomework])
         document.querySelector('#modalAdminClose').click()
-
     })
     document.querySelectorAll(".titleLesson").forEach((lesson) => {
-        lesson.addEventListener('click', (e) => {
+        lesson.addEventListener('click', async (e) => {
+            openedLesson = e.target.id
             const lessonModal = document.querySelector('#lessonModal')
-            const lessonInfo = mapped.filter((lessonInfo)=>lessonInfo.id === Number(e.target.id))
-            console.log(lessonInfo)
+            const lessonInfo = mapped.filter((lessonInfo) => lessonInfo.id === Number(e.target.id))
             lessonTitle.textContent = lessonInfo[0].title
             lessonDescription.textContent = lessonInfo[0].description
             lessonYoutube.href = lessonInfo[0].youtubeLink.length > 0 ? lessonInfo[0].youtubeLink : '#'
             lessonHomework.textContent = lessonInfo[0].homework
             lessonModal.style.display = 'block'
+            const responseComment = await fetch(`https://lagzya.top:8675//comment/${openedLesson}`);
+            const data = await responseComment.json();
+            console.log(data)
+            clearDiv('commentContainer')
+            data.lessons.forEach(([author, comment]) => {
+                const div = document.createElement('div')
+                div.classList.add('comment')
+                div.textContent = comment
+                const spanAuthor = document.createElement('span')
+                spanAuthor.textContent = author
+                spanAuthor.classList.add('commentAuthor')
+                commentContainer.appendChild(spanAuthor)
+
+                commentContainer.appendChild(div)
+            })
             document.getElementById('lessonClose').onclick = function () {
                 lessonModal.style.display = "none";
             }
+
         })
     })
-    // })
+    const commentInput = document.getElementById('commentInput')
+    document.getElementById('commentSend').addEventListener('click', () => {
+        const comment = commentInput.value
+        fetch(`https://lagzya.top:8675//comment`, {
+            method: 'POST', headers: {
+                'Content-Type': 'application/json', 'token': window.localStorage.getItem("token")
+            }, body: JSON.stringify({
+                description: comment, lessonId: openedLesson
+            })
+        })
+        commentInput.value = ''
+    })
+}
+
+function clearDiv(containerId) {
+    const container = document.getElementById(containerId);
+
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
 }
 
 load()
