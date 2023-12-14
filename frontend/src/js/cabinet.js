@@ -64,7 +64,7 @@ function includeDate(mapped, date) { // фунецию отбора из уро�
 }
 
 async function load() {
-    const response = await fetch('https:/lagzya.top:8675//lessons', { // запрос на получение всех уроков с сервера
+    const response = await fetch('https:/lagzya.top:8675/lessons', { // запрос на получение всех уроков с сервера
         method: 'GET', // метод получения получить
         headers: {
             'Content-Type': 'application/json', // тип данных
