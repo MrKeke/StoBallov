@@ -10,13 +10,13 @@ const prices = { // обозначаем цены и скидки всех та�
         perMonth: '2 500 ₽',
         perMonthDiscount: '',
     },
-    standard:{
+    standard: {
         perYerDiscount: '56 000 ₽',
         perYer: '49 980 ₽',
         perMonth: '7 890 ₽',
         perMonthDiscount: '',
     },
-    premium:{
+    premium: {
         perYerDiscount: '67 200 ₽',
         perYer: '50 980 ₽',
         perMonth: '9 590 ₽',
@@ -31,7 +31,7 @@ category.forEach((span) => { // проходимся по всем катего�
         perYer.textContent = prices[id].perYer // ставим цену за год
         perMonthDiscount.textContent = prices[id].perMonthDiscount // ставим скидку за месяц
         perYerDiscount.textContent = prices[id].perYerDiscount // ставим скидку за год
-         category.forEach((sp)=> sp.classList.remove('active')) // переключаем выбранное
+        category.forEach((sp) => sp.classList.remove('active')) // переключаем выбранное
         e.target.classList.add('active')
     })
 })
