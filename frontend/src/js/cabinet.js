@@ -64,7 +64,7 @@ function includeDate(mapped, date) { // фунецию отбора из уро�
 }
 
 async function load() {
-    const response = await fetch('https://lagzya.top:8675//lessons', { // запрос на получение всех уроков с сервера
+    const response = await fetch('https:/lagzya.top:8675//lessons', { // запрос на получение всех уроков с сервера
         method: 'GET', // метод получения получить
         headers: {
             'Content-Type': 'application/json', // тип данных
@@ -236,7 +236,7 @@ async function load() {
         e.preventDefault();
         const dataTime = modal.firstElementChild.dataset.time
         const radio9 = radioButtonReg9.checked
-        fetch(`https://lagzya.top:8675//lesson`, {
+        fetch(`https://lagzya.top:8675/lesson`, {
             method: 'POST', headers: {
                 'Content-Type': 'application/json', 'token': window.localStorage.getItem("token")
             }, body: JSON.stringify({
@@ -261,8 +261,11 @@ async function load() {
             lessonYoutube.href = lessonInfo[0].youtubeLink.length > 0 ? lessonInfo[0].youtubeLink : '#'
             lessonHomework.textContent = lessonInfo[0].homework
             lessonModal.style.display = 'block'
-            const responseComment = await fetch(`https://lagzya.top:8675//comment/${openedLesson}`);
+            const responseComment = await fetch(`https:/lagzya.top:8675//comment/${openedLesson}`);
             const data = await responseComment.json();
+            if(commentContainer.childNodes.length > 0){
+                commentContainer.display = 'flex'
+            }
             console.log(data)
             clearDiv('commentContainer')
             data.lessons.forEach(([author, comment]) => {
@@ -285,7 +288,7 @@ async function load() {
     const commentInput = document.getElementById('commentInput')
     document.getElementById('commentSend').addEventListener('click', () => {
         const comment = commentInput.value
-        fetch(`https://lagzya.top:8675//comment`, {
+        fetch(`https://lagzya.top:8675/comment`, {
             method: 'POST', headers: {
                 'Content-Type': 'application/json', 'token': window.localStorage.getItem("token")
             }, body: JSON.stringify({
