@@ -263,8 +263,6 @@ async function load() {
             lessonModal.style.display = 'block'
             const responseComment = await fetch(`https://lagzya.top:8675/comment/${openedLesson}`);
             const data = await responseComment.json();
-
-            console.log(data)
             clearDiv('commentContainer')
             data.lessons.forEach(([author, comment]) => {
                 const div = document.createElement('div')
