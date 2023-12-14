@@ -261,7 +261,7 @@ async function load() {
             lessonYoutube.href = lessonInfo[0].youtubeLink.length > 0 ? lessonInfo[0].youtubeLink : '#'
             lessonHomework.textContent = lessonInfo[0].homework
             lessonModal.style.display = 'block'
-            const responseComment = await fetch(`https:/lagzya.top:8675/comment/${openedLesson}`);
+            const responseComment = await fetch(`https://lagzya.top:8675/comment/${openedLesson}`);
             const data = await responseComment.json();
             if(commentContainer.childNodes.length > 0){
                 commentContainer.display = 'flex'
@@ -279,9 +279,10 @@ async function load() {
 
                 commentContainer.appendChild(div)
             })
-            document.getElementById('lessonClose').onclick = function () {
+            document.getElementById('lessonClose').addEventListener('click', function () {
+                console.log('click')
                 lessonModal.style.display = "none";
-            }
+            })
 
         })
     })
