@@ -68,7 +68,7 @@ async function login(email, password) { // функция запроса на л
         window.localStorage.setItem("token", data.token); // добавляем в хранилище сайта токен
         window.location.href = '/'; // отправляем пользователя на главную страницу
     } else if (response.status === 401) { // если ошибка то
-        showError([emailInputLogin, passwordInputLogin], errorLogin, data.error); // отображаем ошибку и ее текст в выбранных полях
+        showError([emailInputLogin, passwordInputLogin], errorLogin, 'Пользователь не найден'); // отображаем ошибку и ее текст в выбранных полях
     }
     return  true
 }
