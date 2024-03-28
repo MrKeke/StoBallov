@@ -1,42 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body>
 <header>
-    <div style="display: flex; justify-content: center; align-items: center; margin-top: 50px;">
+    <div class="flex justify-center items-center mt-[50px]">
         <a href="index.html">
-            <img src="/img/bigLogo.png" alt="biLogo" style="object-fit: contain; height: 320px; width: 320px;">
+            <img src="/img/bigLogo.png" class="object-contain h-80 w-80" alt="biLogo">
         </a>
     </div>
 </header>
 <main>
 
-    <div style="display: flex; gap: 30px; flex-direction: row; justify-content: center; align-items: center;">
+    <div class="flex gap-[30px] justify-center items-center">
         <a href="#AuthModal">
-            <div id="auth" class="auth">
-                <h1 class="aboutH">Авторизация</h1>
+            <div id="auth"
+                 class="py-16 rounded-3xl px-20 border border-solid border-black flex justify-center transition-all duration-500 hover:bg-blue-600 hover:text-white">
+                <h1 class="text-center text-5xl font-bold">Авторизация</h1>
             </div>
         </a>
         <a href="#RegistationModal">
-            <div id="registration" class="auth">
-                <h1 class="aboutH">Регистрация</h1>
+            <div id="registration"
+                 class="py-16 rounded-3xl px-20 border border-solid border-black flex justify-center transition-all duration-500 hover:bg-blue-600 hover:text-white">
+                <h1 class="text-center text-5xl font-bold">Регистрация</h1>
             </div>
         </a>
 
     </div>
-    <div id="AuthModal" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content-auth">
-                <div class="modal-header">
-                    <h3 class="modal-title">Авторизация</h3>
-                    <a href="#closeAuthModal" title="Close" class="close">×</a>
+    <div id="AuthModal"
+         class="target:opacity-100 target:pointer-events-auto target:overflow-auto fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-50 z-10 opacity-0 pointer-events-none transition-opacity duration-200 ease-in-out">
+        <div class="relative w-auto my-52 mx-96">
+            <div class="relative flex flex-col bg-white bg-clip-padding border border-solid border-black border-opacity-20 rounded outline-0">
+                <div class="flex items-center justify-between p-4 border border-solid border-[#ECEEEFFF]">
+                    <h3 class="my-0 text-xl font-bold">Авторизация</h3>
+                    <a href="#closeAuthModal" title="Close"
+                       class="text-2xl cursor-pointer hover:opacity-50 ease-in-out transition-all duration-500">×</a>
                 </div>
-                <div class="modal-body">
-                    <form id="form-login" style="display: flex; flex-direction: column; gap:20px; padding: 10px 20px">
+                <div class="relative flex-auto p-4 overflow-auto">
+                    <form class="flex flex-col gap-5 py-2 px-5" id="form-login">
                         <label>
                             <span>Почта</span>
                             <input autocomplete="off" autofocus id="email-login" type="text"/>
@@ -45,25 +51,27 @@
                             <span>Пароль</span>
                             <input id="password-login" type="password"/>
                         </label>
-                        <span id="error-login" style="align-self: center; display: none"></span>
-                        <div style="display: flex; justify-content: center; align-items: center; padding: 10px 0">
-                            <button style="padding: 7px 5px;" id="button-login" type="submit">Отправить</button>
+                        <span id="error-login" class="self-center hidden"></span>
+                        <div class="flex justify-center items-center py-2">
+                            <button class="py-[7px] px-[5px]" id="button-login" type="submit">Отправить</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <div id="RegistationModal" class="modal">
-        <div class="modal-dialog">
+    <div id="RegistationModal"
+         class="target:opacity-100 target:pointer-events-auto target:overflow-auto fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-50 z-10 opacity-0 pointer-events-none transition-opacity duration-200 ease-in-out">
+        <div class="relative w-auto my-52 mx-96">
             <div class="modal-content-auth">
-                <div class="modal-header">
-                    <h3 class="modal-title">Регистрация</h3>
-                    <a href="#closeRegistationModal" title="Close" class="close">×</a>
+                <div class="flex items-center justify-between p-4 border border-solid border-[#ECEEEFFF]">
+                    <h3 class="my-0 text-xl font-bold">Регистрация</h3>
+                    <a href="#closeRegistationModal" title="Close"
+                       class="text-2xl cursor-pointer hover:opacity-50 ease-in-out transition-all duration-500">×</a>
                 </div>
-                <div class="modal-body">
+                <div class="relative flex-auto p-4 overflow-auto">
                     <form id="register-form"
-                          style="display: flex; flex-direction: column; gap:20px; padding: 10px 20px;">
+                          class="flex flex-col gap-5 py-[10px] px-5">
                         <label>
                             <span>Имя</span>
                             <input placeholder="Паша" id="first-name-register" type="text"/>
@@ -76,7 +84,8 @@
                         </label>
                         <label>
                             <span>Почта</span>
-                            <input autocomplete="off" placeholder="prostamatika@mail.ru" autofocus id="email-register" type="text"/>
+                            <input autocomplete="off" placeholder="prostamatika@mail.ru" autofocus id="email-register"
+                                   type="text"/>
                         </label>
                         <label>
                             <span>Пароль</span>
@@ -97,9 +106,9 @@
                                 <span>11 Класс</span>
                             </label>
                         </label>
-                        <span id="error-register" style="align-self: center; display: none"></span>
-                        <div style="display: flex; justify-content: center; align-items: center; padding: 10px 0">
-                            <button style="padding: 7px 5px;" id="register-button" type="submit">Отправить</button>
+                        <span id="error-register" class="self-center hidden"></span>
+                        <div class="flex justify-between items-center py-[10px] px-0">
+                            <button class="py-[7px] px-[5px]" id="register-button" type="submit">Отправить</button>
                         </div>
                     </form>
 

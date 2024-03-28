@@ -20,10 +20,12 @@ window.onload = async function () { // при загрузке проверям 
         window.href = '/' // если гость отправляем на главную страницу
     }
     const scrolled = window.scrollY; // прячем верхнее окно если пользователь низко на странице
-    if (scrolled > 20) {
-        header.classList.add('out');
-    } else {
-        header.classList.remove('out');
+    if (scrolled > 20) { // если пользователь ниже 20 пикселей
+        header.classList.add('-top-[100px]'); // прячем часть страницы
+        navLinks.classList.add("hidden"); // прячем открытый личный кабинет
+
+    } else { // если меньше
+        header.classList.remove('-top-[100px]'); // показываем верхнюю часть страницы
 
     }
 }
