@@ -47,13 +47,11 @@ window.addEventListener('scroll', function () { // прячем верхную �
     const scrolled = window.scrollY; // положение пользователя на странице
 
     if (scrolled > 20) { // если пользователь ниже 20 пикселей
-        header.classList.remove('top-0')
-        header.classList.add('-top-[100px]'); // прячем часть страницы
+        header.classList.add('-top-44'); // прячем часть страницы
         navLinks.classList.add("hidden"); // прячем открытый личный кабинет
 
     } else { // если меньше
-        header.classList.remove('-top-[100px]'); // показываем верхнюю часть страницы
-        header.classList.add('top-0')
+        header.classList.remove('-top-44'); // показываем верхнюю часть страницы
     }
 });
 document.querySelector("#cabinet").addEventListener("click", () => { // при клике кнопки личного кабинета показываем меню

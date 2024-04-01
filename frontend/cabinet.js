@@ -188,11 +188,10 @@ async function load() {
     window.addEventListener('scroll', function () {
         const scrolled = window.scrollY;
         if (scrolled > 20) { // если пользователь ниже 20 пикселей
-            header.classList.add('-top-[100px]'); // прячем часть страницы
-            navLinks.classList.add("hidden"); // прячем открытый личный кабинет
+            header.classList.add('-top-44'); // прячем часть страницы
 
         } else { // если меньше
-            header.classList.remove('-top-[100px]'); // показываем верхнюю часть страницы
+            header.classList.remove('-top-44'); // показываем верхнюю часть страницы
         }
     });
 
@@ -230,6 +229,7 @@ async function load() {
         e.preventDefault();
         const dataTime = modal.firstElementChild.dataset.time
         const radio9 = radioButtonReg9.checked
+        console.log('send')
         fetch(`${server}lesson`, {
             method: 'POST', headers: {
                 'Content-Type': 'application/json', 'token': window.localStorage.getItem("token")
@@ -241,6 +241,10 @@ async function load() {
                 dateStart: parseDateStringToDateTime(dataTime),
                 grade: radio9 ? 9 : 11,
             })
+        }).then((r)=>{
+            console.log(r)
+        }).catch((e)=>{
+            console.log(e)
         })
         clearForm([formTitle, formDescription, formYoutube, formHomework])
         document.querySelector('#modalAdminClose').click()
