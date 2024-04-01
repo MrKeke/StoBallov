@@ -133,8 +133,8 @@ app.post('/lesson', async (req, res) => { // запрос на создание 
                 forGrade: grade, // для 9 или 11 класса урок
                 completedUsers: {
                     connectOrCreate: {
-                        where: [{id}],
-                        create: [{id}],
+                        where: {id},
+                        create: {id},
                     },
                 }
             }
