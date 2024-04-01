@@ -88,7 +88,7 @@ buttonReg.addEventListener('click', (e) => { // при клике на кноп�
     const radio9 = radioButtonReg9.checked // проверяем выбран ли 9 класс
     if (email === '' || password === '' || passwordConfirm === '' || firstName === '' || lastName === '') { // если какое-то из полей пустое выводим ошибку
         showError([emailInputReg, passwordInputReg, passwordConfirmInputReg, firstNameInputReg, lastNameInputReg], errorReg, 'Заполните все поля')
-    } else if (email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/) === null) { // если почта не формата почты выводим ошибку
+    } else if (email.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/) === null) { // если почта не формата почты выводим ошибку
         showError([emailInputReg], errorReg, 'Введите корректный email')
     } else if (password !== passwordConfirm) { // если пароли не сопадают выводим ошибку
         showError([passwordInputReg, passwordConfirmInputReg], errorReg, 'Пароли не совпадают');
@@ -111,7 +111,7 @@ buttonLogin.addEventListener('click', (e) => { // клик по кнопке л�
     const password = passwordInputLogin.value.trim(); // берем значение из формы с пароем
     if (email === '' || password === '') { // проверка на заполненность всех полей и вывод ошибки
         showError([emailInputLogin, passwordInputLogin], errorLogin, 'Заполните все поля')
-    } else if (email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/) === null) { // проверка почты на корректность и вывод ошибки
+    } else if (email.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/) === null) { // проверка почты на корректность и вывод ошибки
         showError([emailInputLogin], errorLogin, 'Введите корректный email')
     } else { // логин
         login(email, password) // логин пользователя на сервре
