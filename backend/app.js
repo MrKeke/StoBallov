@@ -120,9 +120,8 @@ app.post('/feedback', async (req, res) => { // создаем тике на фи
 app.post('/lesson', async (req, res) => { // запрос на создание в базе урока
     try { // пробуем сделать то что ниже чтобы в случае ошибки ничего не сломать
         const token = req.headers.token // получаем токен
-        const {title, description, youtubeLink, homework, dateStart, grade} = req.body // получаем данные для создания урока
+        const {title, description, youtubeLink, homework, dateStart,grade} = req.body // получаем данные для создания урока
         const {id} = jwt.verify(token, process.env.JWT_SECRET) // из токена берем id
-        console.log(title, description, youtubeLink, dateStart, grade)
         await prisma.lesson.create({ // создаем урок в бд
             data: {
                 title, // передаем заголовок
@@ -132,14 +131,16 @@ app.post('/lesson', async (req, res) => { // запрос на создание 
                 dateStart, // дата на которой записан урок
                 forGrade: grade, // для 9 или 11 класса урок
                 completedUsers: {
-                    connect: [{id}] // список выполненных пользователей
+                    connectOrCreate: {
+                        where: [{id}],
+                        create: [{id}],
+                    },
                 }
             }
         })
-        console.log('Урок создан')
         res.status(200) // возвращаем что все хорошо
     } catch (e) { // ловим ошбику
-        console.log('ошибка')
+        console.log(e)
         res.status(401).json({
             error: e.message // возвращаем ошиюку
         })
