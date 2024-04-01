@@ -1,3 +1,5 @@
+import {server} from "./index";
+
 const buttonReg = document.querySelector('#register-button'); // кнопка отправки регистрации
 const emailInputReg = document.querySelector('#email-register'); // форма с почтой регистрации
 const passwordInputReg = document.querySelector('#password-register'); // форма с паролем регистрации
