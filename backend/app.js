@@ -131,12 +131,7 @@ app.post('/lesson', async (req, res) => { // запрос на создание 
                 homework, // домашнее задание
                 dateStart, // дата на которой записан урок
                 forGrade: grade, // для 9 или 11 класса урок
-                completedUsers: {
-                    connectOrCreate: {
-                        where: {id},
-                        create: {id},
-                    },
-                }
+                completedUsers: { connect: { id: id } }
             }
         })
         res.status(200) // возвращаем что все хорошо
