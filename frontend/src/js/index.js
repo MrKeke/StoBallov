@@ -6,13 +6,13 @@ const feedBackTitle = document.getElementById("feedbackTitle"); // ищем за
 const feedBackDescription = document.getElementById("feedbackDescription") // ищем тело тикета в форме
 const authDiv = document.querySelector('#auth') // ищем в документе кнопку авторизации
 const cabinet = document.querySelector('#cabinet') // ищем в документе кнопку перехода в личный кабинет
-
+export const server = 'https://stoballov.onrender.com/'
 
 window.onload = async function () {  // проверяем зашел ли пользователь на стринцу или гость
     const token = window.localStorage.getItem("token"); // получаем токен из хранилища страницы
     if (token) { // если зашел пользователь
         try { // пробуем для отлова ошибки
-            const data = await fetch('https://lagzya.top:8675/session', { // отправляем запрос на проверку токена
+            const data = await fetch(`${server}session`, { // отправляем запрос на проверку токена
                 method: 'GET', // метод запроса на получение
                 headers: { // данные которые прилагаем к запросу
                     'Content-Type': 'application/json', // тип данных которые я передаю
@@ -78,7 +78,7 @@ document.querySelector('#feedbackSend').addEventListener('click', (e) => { // п
     e.preventDefault(); // отключаем перезагрузку страницы по нажатию
     const title = feedBackTitle.value // обозначаем значение заголовка в форме
     const description = feedBackDescription.value // обозачаем значение основной части в форме
-    fetch('https://lagzya.top:8675/feedback', { // запрос на сервер о создании фидбека
+    fetch(`${server}feedback`, { // запрос на сервер о создании фидбека
         method: 'POST', // метод отправки создание
         headers: {'Content-Type': 'application/json', token: window.localStorage.getItem('token')}, // тип данных которые мы отправляем и токен
         body: JSON.stringify({
