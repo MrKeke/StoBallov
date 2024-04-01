@@ -39,16 +39,20 @@ const monthDecoded = {
     11: "Декабрь",
 }
 
-function includeDate(mapped, date) { // фунецию отбора из уроков нужного по дате
+function includeDate(mapped, date) { // функцию отбора из уроков нужного по дате
+    const splitDate = date.split('-')
+
     let currentLesson = mapped.filter((lesson) => { // ищем нужный
-        return lesson.dateStart === date
+        return lesson.dateStart === `${splitDate[0]}-${splitDate[1].length === 1 ? '0'+splitDate[1] : splitDate[1]}-${splitDate[2]}`
     })
     if (currentLesson[0]) { // если он есть то
         const div = document.createElement('div') // создаем новый компонент
         div.textContent = currentLesson[0].title // ставим текстом компонента заголовок
         div.id = currentLesson[0].id // ставим айди для дальнейшей логики
         div.classList.add('titleLesson') // добавляем стиль
+        console.log(div)
         return div // возвращаем его для дальнейшей работы
+
     } else {
         return null // иначе возвращаем ничего
     }
@@ -261,7 +265,7 @@ async function load() {
             lessonModal.style.display = 'block'
             const responseComment = await fetch(`${server}comment/${openedLesson}`);
             const data = await responseComment.json();
-            clearDiv('commentContainer')
+            // clearDiv('commentContainer')
             data.lessons.forEach(([author, comment]) => {
                 const div = document.createElement('div')
                 div.classList.add('comment')
@@ -273,25 +277,25 @@ async function load() {
 
                 commentContainer.appendChild(div)
             })
-            document.getElementById('lessonClose').addEventListener('click', function () {
+            document.querySelector('#lessonClose').addEventListener('click', function () {
                 console.log('click')
                 lessonModal.style.display = "none";
             })
 
         })
     })
-    const commentInput = document.getElementById('commentInput')
-    document.getElementById('commentSend').addEventListener('click', () => {
-        const comment = commentInput.value
-        fetch(`${server}comment`, {
-            method: 'POST', headers: {
-                'Content-Type': 'application/json', 'token': window.localStorage.getItem("token")
-            }, body: JSON.stringify({
-                description: comment, lessonId: openedLesson
-            })
-        })
-        commentInput.value = ''
-    })
+    // const commentInput = document.getElementById('commentInput')
+    // document.getElementById('commentSend').addEventListener('click', () => {
+    //     const comment = commentInput.value
+    //     fetch(`${server}comment`, {
+    //         method: 'POST', headers: {
+    //             'Content-Type': 'application/json', 'token': window.localStorage.getItem("token")
+    //         }, body: JSON.stringify({
+    //             description: comment, lessonId: openedLesson
+    //         })
+    //     })
+    //     commentInput.value = ''
+    // })
 }
 
 function clearDiv(containerId) {
