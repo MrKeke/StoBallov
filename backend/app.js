@@ -122,6 +122,7 @@ app.post('/lesson', async (req, res) => { // запрос на создание 
         const token = req.headers.token // получаем токен
         const {title, description, youtubeLink, homework, dateStart,grade} = req.body // получаем данные для создания урока
         const {id} = jwt.verify(token, process.env.JWT_SECRET) // из токена берем id
+        console.log('id:', id)
         await prisma.lesson.create({ // создаем урок в бд
             data: {
                 title, // передаем заголовок
