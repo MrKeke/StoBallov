@@ -1,4 +1,3 @@
-import {server} from "./index";
 
 const buttonReg = document.querySelector('#register-button'); // кнопка отправки регистрации
 const emailInputReg = document.querySelector('#email-register'); // форма с почтой регистрации
@@ -14,7 +13,7 @@ const buttonLogin = document.querySelector('#button-login'); // кнопки о�
 const emailInputLogin = document.querySelector('#email-login'); // форма с почтой в логине
 const passwordInputLogin = document.querySelector('#password-login'); // форма с паролем в логине
 const errorLogin = document.querySelector('#error-login'); // поле с ошибкой в логине
-
+const server = 'https://stoballov.onrender.com/'
 window.onload = () => { // проверка гость ли пользователь
     if (window.localStorage.getItem('token') !== null) { // если пользователь не гость отправляем на главную страницу
         window.location.href = '/';

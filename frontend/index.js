@@ -1,12 +1,12 @@
 const header = document.querySelector('header') // ищем верхнее окно "хедер" в документе
-const navLinks = document.querySelector("#nav-links") // ищем кнопку навигации в документе
+const navLinks = document.querySelector("#nav-links") || undefined // ищем кнопку навигации в документе
 const modal = document.getElementById("feedBackModal"); // ищем всплывающее окно в документе
 const span = document.getElementById("close"); // ищем кнопку закрытия вспл окна в документе
 const feedBackTitle = document.getElementById("feedbackTitle"); // ищем заголовок тикета в форме
 const feedBackDescription = document.getElementById("feedbackDescription") // ищем тело тикета в форме
 const authDiv = document.querySelector('#auth') // ищем в документе кнопку авторизации
 const cabinet = document.querySelector('#cabinet') // ищем в документе кнопку перехода в личный кабинет
-export const server = 'https://stoballov.onrender.com/'
+const server = 'https://stoballov.onrender.com/'
 
 window.onload = async function () {  // проверяем зашел ли пользователь на стринцу или гость
     const token = window.localStorage.getItem("token"); // получаем токен из хранилища страницы
@@ -47,18 +47,18 @@ window.addEventListener('scroll', function () { // прячем верхную �
     const scrolled = window.scrollY; // положение пользователя на странице
 
     if (scrolled > 20) { // если пользователь ниже 20 пикселей
+        header.classList.remove('top-0')
         header.classList.add('-top-[100px]'); // прячем часть страницы
         navLinks.classList.add("hidden"); // прячем открытый личный кабинет
 
     } else { // если меньше
         header.classList.remove('-top-[100px]'); // показываем верхнюю часть страницы
-
+        header.classList.add('top-0')
     }
 });
 document.querySelector("#cabinet").addEventListener("click", () => { // при клике кнопки личного кабинета показываем меню
     navLinks.classList.toggle("hidden"); // показываем меню
 });
-// Выход
 document.querySelector("#logout").addEventListener("click", () => { // при клике выход пользователя
     logout() // выход пользователя
 })

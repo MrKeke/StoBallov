@@ -1,5 +1,3 @@
-import {server} from "./index";
-
 let isAdmin = JSON.parse(window.localStorage.getItem("user")).user.isAdmin // проверка на администратора
 const header = document.querySelector('header') // поиск верхнего окна в документе
 const radioButtonReg9 = document.querySelector('#nine') // поиск выбора класса в форме в документе
@@ -16,19 +14,10 @@ const lessonYoutube = document.getElementById("lessonYoutube"); // ищем в �
 const lessonHomework = document.getElementById("lessonHomework"); // ищем в документе дз урока
 let openedLesson = -1; // открытый урок
 const commentContainer = document.getElementById("commentContainer");
-
+const server = 'https://stoballov.onrender.com/'
 window.onload = async function () { // при загрузке проверям не зашел ли случайно гость
     if (token === null) {
         window.href = '/' // если гость отправляем на главную страницу
-    }
-    const scrolled = window.scrollY; // прячем верхнее окно если пользователь низко на странице
-    if (scrolled > 20) { // если пользователь ниже 20 пикселей
-        header.classList.add('-top-[100px]'); // прячем часть страницы
-        navLinks.classList.add("hidden"); // прячем открытый личный кабинет
-
-    } else { // если меньше
-        header.classList.remove('-top-[100px]'); // показываем верхнюю часть страницы
-
     }
 }
 // логика создания календаря начало
@@ -198,11 +187,12 @@ async function load() {
 
     window.addEventListener('scroll', function () {
         const scrolled = window.scrollY;
-        if (scrolled > 20) {
-            header.classList.add('out');
-        } else {
-            header.classList.remove('out');
+        if (scrolled > 20) { // если пользователь ниже 20 пикселей
+            header.classList.add('-top-[100px]'); // прячем часть страницы
+            navLinks.classList.add("hidden"); // прячем открытый личный кабинет
 
+        } else { // если меньше
+            header.classList.remove('-top-[100px]'); // показываем верхнюю часть страницы
         }
     });
 
